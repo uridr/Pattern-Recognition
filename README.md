@@ -1,2 +1,3 @@
 # Pattern-Recognition
-Detecting noisy numbers with mathematical optimization algorithms
+Pattern recognition with single layer neural networks.
+
