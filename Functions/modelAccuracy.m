@@ -1,5 +1,6 @@
 function[modAcc] = modelAccuracy(model, pixelDataset, valueDataset)
 
+modAcc = 0;
 p = size(pixelDataset,2);
 
 for i=1:p

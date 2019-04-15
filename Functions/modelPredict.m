@@ -7,7 +7,7 @@ predict = round(y(object,model)); %Round or Sigmoide (ToDecide)
 
 %If model recognizes obj as one in chosen subset indicator = 1
 
-if predict == 1 indicator = 1;
+if predict >= 1 indicator = 1;
 else            indicator = 0; end
 
 end
