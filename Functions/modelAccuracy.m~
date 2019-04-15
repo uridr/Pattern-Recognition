@@ -1,0 +1,9 @@
+function[modelAccuracy] = Accuracy(model, dataset)
+
+p = size(dataset,2);
+
+for i=1:p
+    if modelPredict(model,dataset() == dataset[i]
+end
+
+end
