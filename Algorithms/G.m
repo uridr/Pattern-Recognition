@@ -1,30 +1,24 @@
-function [xk,dk,alk,iWk] = G(x,f,g,Q,eps,kmax,almax,almin,rho,c1,c2,iW)
+function [xk,dk,alk,outk] = G(x,f,g,eps,kmax,almax,c1,c2)
     
 k     = 1; 
 al    = almax;
 xk    = [x];
 dk    = [];
-iWk   = [];
-alk   = [al]; 
+alk   = [al];
+outk  = [];
 
 while norm(g(x)) > eps & k < kmax
     
-   d       = -g(x);  
-   %Line Search
-   if  iW == 0
-       al  = -g(x)'*d/(d'*Q*d);
-       iWi = 0;
-   else [al,iWi]  = BLS(x,d,f,g,almax,almin,rho,c1,c2,iW); 
-   end
-   x        = x + al*d;
+   d          = -g(x);  
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmax,eps);
+   x          = x + al*d;
    
    dk       = [dk d];
    xk       = [xk x];
-   iWk      = [iWk iWi];
    alk      = [alk al];
+   outk     = [outk iout];
    k        = k + 1;
    
 end
-
 end
 

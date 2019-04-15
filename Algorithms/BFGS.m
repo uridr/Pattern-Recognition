@@ -1,23 +1,21 @@
-function [xk,dk,alk,iWk, Hk] = BFGS(x,f,g,Q,eps,kmax,almax,almin,rho,c1,c2,iW)
+function [xk,dk,alk,iWk, Hk] = BFGS(x,f,g,eps,kmax,almax,c1,c2)
 
-k   = 0;
-I   = eye(length(size(g)));
-al  = almax;
-dk  = [];
-xk  = [x];
-H = I;
-Hk  = [];
-iWk = [];
-alk = [al];
+k    = 0;
+I    = eye(length(size(g)));
+al   = almax;
+dk   = [];
+xk   = [x];
+H    = I;
+Hk   = [];
+alk  = [al];
+outk = [];
 
 while norm(g(x)) > eps & k < kmax
 
     gx = g(x);
     d  = -H*gx;
-   if   iW == 0
-        al  = -gx'*d/(d'*Q*d);
-        iWi = 0;
-   else [al,iWi]  = BLS(x,d,f,g,almax,almin,rho,c1,c2,iW); end
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kma,eps)
+   
    x  = x + al*d;
    sk = al*d; yk = g(x)- gx; pk = 1/(yk'*sk);
    H  = (I-pk*sk*yk')*H*(I-pk*yk*sk')+pk*sk*sk';
@@ -26,7 +24,7 @@ while norm(g(x)) > eps & k < kmax
    dk       = [dk d];
    xk       = [xk x];
    Hk       = [Hk H]; 
-   iWk      = [iWk iWi];
+   outk     = [outk iout];
    alk      = [alk al];
    
 end

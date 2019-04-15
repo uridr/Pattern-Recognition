@@ -1,22 +1,19 @@
-function  [xk,dk,alk,iWk,betak] = CG(x,f,g,Q,eps,kmax,almax,almin,rho,c1,c2,iW,icg,irc,nu)
+function  [xk,dk,alk,outk,betak] = CG(x,f,g,eps,kmax,almax,c1,c2,icg,irc,nu)
 
 k     = 0; 
 d     = -g(x);
 al    = almax;
 xk    = [x];
 dk    = [];
-iWk   = [];
-alk   = [al]; 
+alk   = [al];
+outk  = [];
 betak = [];
 
 while norm(g(x)) > eps & k < kmax
 
    %Line Search
-   if  iW == 0
-       al  = -g(x)'*d/(d'*Q*d);
-       iWi = 0;
-   else [al,iWi]  = BLS(x,d,f,g,almax,almin,rho,c1,c2,iW); 
-   end
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmax,eps); 
+   
    x        = x + al*d;
    k        = k + 1; 
    
@@ -38,6 +35,7 @@ while norm(g(x)) > eps & k < kmax
    dk       = [dk,d];
    iWk      = [iWk, iWi];
    alk      = [alk,al];
+   outk     = [outk, iout];
    betak    = [betak,beta];
   
 end
