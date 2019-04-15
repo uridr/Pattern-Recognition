@@ -1,4 +1,4 @@
-function [xk,dk,alk,outk] = G(x,f,g,eps,kmax,almax,c1,c2)
+function [xk,dk,alk,outk] = G(x,f,g,eps,kmax,kmaxBLS,almax,c1,c2)
     
 k     = 1; 
 al    = almax;
@@ -10,7 +10,7 @@ outk  = [];
 while norm(g(x)) > eps & k < kmax
     
    d          = -g(x);  
-   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmax,eps);
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
    x          = x + al*d;
    
    dk       = [dk d];

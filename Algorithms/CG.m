@@ -1,4 +1,4 @@
-function  [xk,dk,alk,outk,betak] = CG(x,f,g,eps,kmax,almax,c1,c2,icg,irc,nu)
+function  [xk,dk,alk,outk,betak] = CG(x,f,g,eps,kmax,kmaxBLS,almax,c1,c2,icg,irc,nu)
 
 k     = 0; 
 d     = -g(x);
@@ -12,7 +12,7 @@ betak = [];
 while norm(g(x)) > eps & k < kmax
 
    %Line Search
-   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmax,eps); 
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps)); 
    
    x        = x + al*d;
    k        = k + 1; 
