@@ -10,11 +10,12 @@ Hk   = [];
 alk  = [al];
 outk = [];
 
-while norm(g(x)) > eps & k < kmax
+while norm(g(x)) > eps && k < kmax
 
     gx = g(x);
     d  = -H*gx;
-   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
+    almax = 2*(f(x)-f(xk(end)) / gx'*d);
+    [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
    
    x  = x + al*d;
    sk = al*d; yk = g(x)- gx; pk = 1/(yk'*sk);

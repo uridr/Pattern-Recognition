@@ -10,6 +10,7 @@ outk  = [];
 while norm(g(x)) > eps & k < kmax
     
    d          = -g(x);  
+   almax = 2*(f(x)-f(xk(end)) / gx'*d);
    [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
    x          = x + al*d;
    
