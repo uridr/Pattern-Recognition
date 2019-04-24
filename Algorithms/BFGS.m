@@ -1,6 +1,6 @@
 function [xk,dk,alk,outk, Hk] = BFGS(x,f,g,eps,kmax,kmaxBLS,almax,c1,c2)
 
-k    = 0;
+k    = 1;
 I    = eye(length(x));
 al   = almax;
 dk   = [];
@@ -10,12 +10,13 @@ Hk   = [];
 alk  = [al];
 outk = [];
 
-while norm(g(x)) > eps && k < kmax
+while norm(g(x)) > eps & k < kmax
 
     gx = g(x);
     d  = -H*gx;
-    almax = 2*(f(x)-f(xk(end)) / gx'*d);
-    [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
+    
+    if k ~= 1  al = 2*(f(x)-f(xk(1:end,end-1))) / (gx'*d); end
+   [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps));
    
    x  = x + al*d;
    sk = al*d; yk = g(x)- gx; pk = 1/(yk'*sk);

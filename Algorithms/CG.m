@@ -1,6 +1,6 @@
 function  [xk,dk,alk,outk,betak] = CG(x,f,g,eps,kmax,kmaxBLS,almax,c1,c2,icg,irc,nu)
 
-k     = 0; 
+k     = 1; 
 d     = -g(x);
 al    = almax;
 xk    = [x];
@@ -12,14 +12,14 @@ betak = [];
 while norm(g(x)) > eps & k < kmax
 
    %Line Search
-   almax = 2*(f(x)-f(xk(end)) / gx'*d);
+   if k ~= 1  al = 2*(f(x)-f(xk(1:end,end-1))) / (gx'*d); end
    [al,iout]  = BLS(f,g,x,d,almax,c1,c2,kmaxBLS,sqrt(eps)); 
    
    x        = x + al*d;
    k        = k + 1; 
    
    gx  = g(x);
-   gxk = g(xk(1:end,k));
+   gxk = g(xk(1:end,k-1));
    
    %Beta Conditions
    if icg == 1 beta = gx'*gx/norm(gxk)^2; 
@@ -34,7 +34,6 @@ while norm(g(x)) > eps & k < kmax
 
    xk       = [xk, x];
    dk       = [dk,d];
-   iWk      = [iWk, iWi];
    alk      = [alk,al];
    outk     = [outk, iout];
    betak    = [betak,beta];
