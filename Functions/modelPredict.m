@@ -3,7 +3,7 @@ function[indicator] = modelPredict(model, object)
 sig = @(X)   1./(1+exp(-X)); 
 y   = @(X,w) sig(w'*sig(X));
 
-predict = round(y(object,model)); 
+predict = round(y(object,model));
 
 %If model recognizes obj as one in chosen subset indicator = 1
 
