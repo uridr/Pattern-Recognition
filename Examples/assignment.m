@@ -1,3 +1,9 @@
+%% Add Folder to path search
+
+addpath('../Data')  
+addpath('../Algorithms')  
+addpath('../Functions')  
+
 %% Data Set Generation
 
 trFq       = 0.5;
